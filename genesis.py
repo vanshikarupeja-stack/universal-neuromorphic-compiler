@@ -4,6 +4,7 @@ import snntorch as snn
 from snntorch import surrogate
 from snntorch import functional as SF
 from snntorch import utils
+import warnings
 
 # ==========================================
 # 1. THE MATH CHEAT (Surrogate Gradient)
@@ -106,6 +107,17 @@ def compiler_map_fn(module):
     if isinstance(module, nn.Linear):
         return translate_linear(module)
     elif isinstance(module, snn.Leaky):
+        # snnTorch defaults to init_hidden=False (explicit state: forward returns (spk, mem)).
+        # NIR extraction expects spike-only outputs from init_hidden=True layers — warn and
+        # still emit a LIF node so standard snnTorch nets remain compilable.
+        if not getattr(module, "init_hidden", False):
+            warnings.warn(
+                "snn.Leaky layer has init_hidden=False (explicit state). "
+                "Genesis/NIR extraction expects init_hidden=True so the forward pass "
+                "returns spikes only; compiling anyway with a best-effort LIF mapping.",
+                UserWarning,
+                stacklevel=2,
+            )
         return translate_leaky(module)
     return None # Safely bypasses the outer nn.Sequential container
 
