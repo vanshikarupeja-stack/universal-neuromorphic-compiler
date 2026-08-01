@@ -4,7 +4,7 @@
 
 ---
 
-##  Core Compiler Architecture
+## Architecture
 
 UNC operates as a multi-pass optimization pipeline designed to decouple standard PyTorch graph definitions from the non-linear, time-dependent constraints of spiking hardware.
 
