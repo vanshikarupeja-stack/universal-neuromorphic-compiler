@@ -4,11 +4,11 @@
 
 ---
 
-## 🧠 Core Compiler Architecture
+##  Core Compiler Architecture
 
 UNC operates as a multi-pass optimization pipeline designed to decouple standard PyTorch graph definitions from the non-linear, time-dependent constraints of spiking hardware.
 
- ## 🧠 Core Compiler Architecture
+ ##  Core Compiler Architecture
 
 UNC utilizes a multi-pass pipeline for mapping PyTorch graphs to spiking hardware.
 
@@ -26,7 +26,7 @@ UNC utilizes a multi-pass pipeline for mapping PyTorch graphs to spiking hardwar
 </pre>
 
 
-## 🔧 The 3-Pass Compilation Pipeline
+##  The 3-Pass Compilation Pipeline
 
 ### 1. Graph Tracing & Weight Scaling
 * **Objective:** Extract the topological layer structure and execution graph from native PyTorch modules.
@@ -42,7 +42,7 @@ UNC utilizes a multi-pass pipeline for mapping PyTorch graphs to spiking hardwar
 
 ---
 
-## 🚀 Current Status & Roadmap
+##  Current Status & Roadmap
 
 * **Phase 1 (Live MVP - Current Release):** Zero-install browser verification via Google Colab. Validates end-to-end pipeline ingestion of standard PyTorch models and simulates spiking physics directly.
 * **Phase 2 (In Progress):** Full 4-bit dynamic quantization ($W_{\text{int4}}$) and expanded surrogate gradient thresholding.
