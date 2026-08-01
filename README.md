@@ -8,8 +8,23 @@
 
 UNC operates as a multi-pass optimization pipeline designed to decouple standard PyTorch graph definitions from the non-linear, time-dependent constraints of spiking hardware.
 
- [ PyTorch / snnTorch Graph ]│▼  (Pass 1: Graph Tracing & Weight Scaling)[ Intermediate Quantized Representation ]│▼  (Pass 2: Temporal & Synaptic Mapping)[ Spiking Conductance Graph ]│▼  (Pass 3: NIR Serialization)[ Neuromorphic Target / Colab Analog Simulator ]
----
+ ## 🧠 Core Compiler Architecture
+
+UNC utilizes a multi-pass pipeline for mapping PyTorch graphs to spiking hardware.
+
+<pre>
+[ PyTorch / snnTorch Graph ]
+             │
+             ▼  (Pass 1: Graph Tracing & Weight Scaling)
+[ Intermediate Quantized Representation ]
+             │
+             ▼  (Pass 2: Temporal & Synaptic Mapping)
+[ Spiking Conductance Graph ]
+             │
+             ▼  (Pass 3: NIR Serialization)
+[ Neuromorphic Target / Colab Analog Simulator ]
+</pre>
+
 
 ## 🔧 The 3-Pass Compilation Pipeline
 
