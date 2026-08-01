@@ -1,11 +1,34 @@
-# Universal Neuromorphic Compiler (UNC) 🧠⚡
+# Universal Neuromorphic Compiler (UNC)
 
-A lightweight, hardware-agnostic compiler that bridges the gap between deep learning software and analog neuromorphic silicon. 
+*A hardware-agnostic compiler mapping PyTorch directly to analog spiking silicon.*
 
-UNC allows you to train Spiking Neural Networks (SNNs) using standard PyTorch syntax and surrogate gradients, then directly compile the physical synaptic weights into the Neuromorphic Intermediate Representation (NIR) for deployment on edge AI hardware (Intel Loihi, BrainChip Akida, custom FPGAs).
+---
 
-### 🚀 Try the 60-Second Demo
-See the analog physics engine in action. No installation required.
-**[Run the Google Colab 'Magic Trick' Here](https://colab.research.google.com/drive/1dGEuEAycOHtHJYb4iVsju2qgPAjIjgZ0?usp=sharing)**
+## 🧠 Core Compiler Architecture
 
-### 💻 Local Installation
+UNC operates as a multi-pass optimization pipeline designed to decouple standard PyTorch graph definitions from the non-linear, time-dependent constraints of spiking hardware.
+
+ [ PyTorch / snnTorch Graph ]│▼  (Pass 1: Graph Tracing & Weight Scaling)[ Intermediate Quantized Representation ]│▼  (Pass 2: Temporal & Synaptic Mapping)[ Spiking Conductance Graph ]│▼  (Pass 3: NIR Serialization)[ Neuromorphic Target / Colab Analog Simulator ]
+---
+
+## 🔧 The 3-Pass Compilation Pipeline
+
+### 1. Graph Tracing & Weight Scaling
+* **Objective:** Extract the topological layer structure and execution graph from native PyTorch modules.
+* **Mechanism:** Converts continuous floating-point synaptic weights into scaled lower-precision representations optimized for surrogate gradient thresholds, reducing memory overhead.
+
+### 2. Temporal Dynamics & Membrane Leak Mapping
+* **Objective:** Translate standard continuous spatial activations into discrete temporal spike trains.
+* **Mechanism:** Maps Leaky Integrate-and-Fire (LIF) equations across discrete time steps. Calculates membrane voltage decays ($\alpha$) and aligns refractory period limits with target clock cycles.
+
+### 3. Neuromorphic Intermediate Representation (NIR) Serialization
+* **Objective:** Generate a standardized, cross-platform intermediate graph representation.
+* **Mechanism:** Compiles network topology and LIF neuron parameters into standard `.nir` structures, providing a clean bridge to downstream neuromorphic execution environments.
+
+---
+
+## 🚀 Current Status & Roadmap
+
+* **Phase 1 (Live MVP - Current Release):** Zero-install browser verification via Google Colab. Validates end-to-end pipeline ingestion of standard PyTorch models and simulates spiking physics directly.
+* **Phase 2 (In Progress):** Full 4-bit dynamic quantization ($W_{\text{int4}}$) and expanded surrogate gradient thresholding.
+* **Phase 3 (Roadmap):** Native hardware compilation passes optimized for physical deployment environments (e.g., Intel Loihi 2 / BrainChip Akida architectures).
